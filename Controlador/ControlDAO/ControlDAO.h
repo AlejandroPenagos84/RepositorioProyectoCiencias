@@ -74,9 +74,12 @@ public:
     void LeerHijosDAO(const std::string &filename);
 
     /**
-     * @brief Agrega un nuevo hijo a la base de datos.
+     * @brief Agrega un nuevo hijo al final del archivo CSV.
+     *
+     * @param filename Nombre del archivo CSV.
+     * @param newData Datos del nuevo hijo a agregar.
      */
-    void AgregarHijoDAO();
+    void AgregarHijoDAO(const std::string &filename, const Hijo &newData);
 
     /**
      * @brief Elimina un hijo de la base de datos.
@@ -99,9 +102,12 @@ public:
     void LeerEmpleadosDAO(const std::string &filename);
 
     /**
-     * @brief Agrega un nuevo empleado a la base de datos.
+     * @brief Agrega un nuevo empleado al final del archivo CSV.
+     *
+     * @param filename Nombre del archivo CSV.
+     * @param newData Datos del nuevo empleado a agregar.
      */
-    void AgregarEmpleadoDAO();
+    void AgregarEmpleadoDAO(const std::string &filename, const Empleado &newData);
 
     /**
      * @brief Elimina un empleado de la base de datos.
@@ -124,9 +130,12 @@ public:
     void LeerSucursalesDAO(const std::string &filename);
 
     /**
-     * @brief Agrega una nueva sucursal a la base de datos.
+     * @brief Agrega datos de una sucursal al final del archivo CSV.
+     *
+     * @param filename Nombre del archivo CSV.
+     * @param newData Datos de la nueva sucursal a agregar.
      */
-    void AgregarSucursalDAO();
+    void AgregarSucursalDAO(const std::string &filename, const Sucursal &newData);
 
     /**
      * @brief Elimina una sucursal de la base de datos.
@@ -149,9 +158,12 @@ public:
     void LeerCiudadesDAO(const std::string &filename);
 
     /**
-     * @brief Agrega una nueva ciudad a la base de datos.
+     * @brief Agrega una nueva ciudad al final del archivo CSV.
+     *
+     * @param filename Nombre del archivo CSV.
+     * @param newData Datos de la nueva ciudad a agregar.
      */
-    void AgregarCiudadDAO();
+    void AgregarCiudadDAO(const std::string &filename, const Ciudad &newData);
 
     /**
      * @brief Elimina una ciudad de la base de datos.
@@ -174,9 +186,12 @@ public:
     void LeerPaisesDAO(const std::string &filename);
 
     /**
-     * @brief Agrega un nuevo país a la base de datos.
+     * @brief Agrega un nuevo país al final del archivo CSV.
+     *
+     * @param filename Nombre del archivo CSV.
+     * @param newData Datos del nuevo país a agregar.
      */
-    void AgregarPaisDAO();
+    void AgregarPaisDAO(const std::string &filename, const Pais &newData);
 
     /**
      * @brief Elimina un país de la base de datos.

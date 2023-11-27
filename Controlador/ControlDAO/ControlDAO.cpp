@@ -699,4 +699,164 @@ void ControlDAO::ModificarPaisDAO(const std::string &filename, const Pais &updat
     std::cout << "CSV file updated successfully!" << std::endl;
 }
 
+/**
+ * @brief Agrega un nuevo hijo al final del archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param newData Datos del nuevo hijo a agregar.
+ */
+void ControlDAO::AgregarHijoDAO(const std::string &filename, const Hijo &newData) {
+    // Abrir el archivo CSV existente para escritura en modo append
+    std::ofstream outputFile(filename, std::ios::app);
 
+    // Verificar si el archivo se abrió correctamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return;
+    }
+
+    // Escribir la nueva fila al final del archivo
+    outputFile << newData.pk << ","
+               << newData.fk << ","
+               << newData.nombre << ","
+               << newData.fechaNacimiento << "\n";
+
+    // Cerrar el archivo de salida
+    outputFile.close();
+
+    std::cout << "New child added to CSV file successfully!" << std::endl;
+}
+
+/**
+ * @brief Agrega un nuevo empleado al final del archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param newData Datos del nuevo empleado a agregar.
+ */
+void ControlDAO::AgregarEmpleadoDAO(const std::string &filename, const Empleado &newData) {
+    // Abrir el archivo CSV existente para escritura en modo append
+    std::ofstream outputFile(filename, std::ios::app);
+
+    // Verificar si el archivo se abrió correctamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return;
+    }
+
+    // Escribir la nueva fila al final del archivo
+    outputFile << newData.pk << ","
+               << newData.fk << ","
+               << newData.nombre << ","
+               << newData.apellido << ","
+               << newData.tipoIdentificacion << ","
+               << newData.numIdentificacion << ","
+               << newData.sexo << ","
+               << newData.telefonoCelular << ","
+               << newData.telefonoFijo << ","
+               << newData.email << ","
+               << newData.ciudadNacimiento << ","
+               << newData.paisNacimiento << ","
+               << newData.ciudadResidencia << ","
+               << newData.direccion << ","
+               << newData.tieneHijos << ","
+               << newData.actividadLaboral << ","
+               << newData.sucursalTrabajo << ","
+               << newData.barrio << ","
+               << newData.numHijos << ","
+               << newData.fechaNacimiento << ","
+               << newData.estado << "\n";
+
+    // Cerrar el archivo de salida
+    outputFile.close();
+
+    std::cout << "New employee added to CSV file successfully!" << std::endl;
+}
+
+/**
+ * @brief Agrega datos de una sucursal al final del archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param newData Datos de la nueva sucursal a agregar.
+ */
+void ControlDAO::AgregarSucursalDAO(const std::string &filename, const Sucursal &newData) {
+    // Abrir el archivo CSV existente para lectura y escritura
+    std::fstream file(filename, std::ios::in | std::ios::out | std::ios::app);
+
+    if (!file.is_open()) {
+        std::cerr << "Error opening file for reading and writing!" << std::endl;
+        return;
+    }
+
+    // Construir una cadena con los datos de la nueva sucursal
+    std::ostringstream oss;
+    oss << newData.pk << ","
+        << newData.fk << ","
+        << newData.nombre << ","
+        << newData.direccion << ","
+        << newData.barrio << ","
+        << newData.nombreGerente << ","
+        << newData.estado;
+
+    // Escribir la cadena al final del archivo
+    file << oss.str() << "\n";
+
+    // Cerrar el archivo
+    file.close();
+
+    std::cout << "Sucursal added to CSV file successfully!" << std::endl;
+}
+
+/**
+ * @brief Agrega una nueva ciudad al final del archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param newData Datos de la nueva ciudad a agregar.
+ */
+void ControlDAO::AgregarCiudadDAO(const std::string &filename, const Ciudad &newData) {
+    // Abrir el archivo CSV existente para escritura en modo append
+    std::ofstream outputFile(filename, std::ios::app);
+
+    // Verificar si el archivo se abrió correctamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return;
+    }
+
+    // Escribir la nueva fila al final del archivo
+    outputFile << newData.pk << ","
+               << newData.fk << ","
+               << newData.nombre << ","
+               << newData.estado << "\n";
+
+    // Cerrar el archivo de salida
+    outputFile.close();
+
+    std::cout << "New city added to CSV file successfully!" << std::endl;
+}
+
+/**
+ * @brief Agrega un nuevo país al final del archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param newData Datos del nuevo país a agregar.
+ */
+void ControlDAO::AgregarPaisDAO(const std::string &filename, const Pais &newData) {
+    // Abrir el archivo CSV existente para escritura en modo append
+    std::ofstream outputFile(filename, std::ios::app);
+
+    // Verificar si el archivo se abrió correctamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return;
+    }
+
+    // Escribir la nueva fila al final del archivo
+    outputFile << newData.pk << ","
+               << newData.nombre << ","
+               << newData.estado << "\n";
+
+    // Cerrar el archivo de salida
+    outputFile.close();
+
+    std::cout << "New country added to CSV file successfully!" << std::endl;
+}
