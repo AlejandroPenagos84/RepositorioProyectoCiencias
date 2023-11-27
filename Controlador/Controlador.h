@@ -5,10 +5,12 @@
 #include "ControlDAO/ControlDAO.h"
 
 class ControlDAO;
+class Vista;
+
 class Controlador
 {
 private:
-    Vista vista;
+    Vista* vista;
     ControlDAO* controlDao;
     MultilistaPaises* multilistaPaises;
 

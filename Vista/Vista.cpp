@@ -1,9 +1,8 @@
 #include "Vista.h"
 // Configurar según la localización del sistema
 
-Vista::Vista()
-{
-
+Vista::Vista(Controlador *ctrl){
+    controlador = ctrl;
 }
 
 void Vista::MenuGlobal() {
@@ -18,7 +17,7 @@ void Vista::MenuGlobal() {
                 break;
 
             case 2:
-                std::cout << "CONSULTARR: " << std::endl; // Temporal
+                ElegirConsulta();
                 break;
 
             case 3:
@@ -30,18 +29,17 @@ void Vista::MenuGlobal() {
 
 int Vista::MostrarMenu() {
     int num;
-    std::cout<<"Sucursales"<<std::endl;
-    std::cout<<"\t1. Ingresar nuevos datos: "<<std::endl;
-    std::cout<<"\t2. Consultar: "<<std::endl;
-    std::cout<<"\t3. Salir: "<<std::endl;
-    std::cout<<"Ingresa una opción: ";
+    std::cout << "Sucursales" << std::endl;
+    std::cout << "\t1. Ingresar nuevos datos: " << std::endl;
+    std::cout << "\t2. Consultar: " << std::endl;
+    std::cout << "\t3. Salir: " << std::endl;
+    std::cout << "Ingresa una opción: ";
 
-    std::cin>>num;
+    std::cin >> num;
     return num;
 }
 
-void Vista::IngresarDatos()
-{
+void Vista::IngresarDatos() {
     int numEmpleados;
     std::cout << "Ingrese el número de empleados: ";
     std::cin >> numEmpleados;
@@ -67,32 +65,60 @@ void Vista::IngresarDatos()
 }
 
 
-void Vista::MenuConsultas()
-{
-    std::cout<<"Consultas"<<std::endl;
+int Vista::MenuConsultas() {
+    int opcion;
+    std::cout << "Consultas" << std::endl;
 
-    std::cout<<"\t1. Número total de personas que trabajan en una sucursal\n"
-               "clasificados en rangos de edades "<<std::endl;
+    std::cout << "\t1. Número total de personas que trabajan en una sucursal\n"
+                 "clasificados en rangos de edades " << std::endl;
 
-    std::cout<<"\t2. Listado de los nombres y apellidos de aquellos que tienen  \n"
-               "un número de hijos dado : "<<std::endl;
+    std::cout << "\t2. Listado de los nombres y apellidos de aquellos que tienen  \n"
+                 "un número de hijos dado : " << std::endl;
 
-    std::cout<<"\t3. Nombre y apellidos de las personas que viven en una ciudad dada: "<<std::endl;
+    std::cout << "\t3. Nombre y apellidos de las personas que viven en una ciudad dada: " << std::endl;
 
-    std::cout<<"\t4. Número de sucursales en las que trabaja un número de personas superior a\n"
-               " un número dado"<<std::endl;
+    std::cout << "\t4. Número de sucursales en las que trabaja un número de personas superior a\n"
+                 " un número dado" << std::endl;
 
-    std::cout<<"\t5. Obtener el número de hombres y el número de hombres y mujeres"<<std::endl;
+    std::cout << "\t5. Obtener el número de hombres y el número de hombres y mujeres" << std::endl;
 
-    std::cout<<"\t6. Lista de trabajadores de de edad dada"<<std::endl;
+    std::cout << "\t6. Lista de trabajadores de de edad dada" << std::endl;
 
-    std::cout<<"\t7. Salir"<<std::endl;
+    std::cout << "\t7. Salir" << std::endl;
 
-    std::cout<<"Ingresa una opción: ";
+    std::cout << "Ingresa una opción: ";
+
+    std::cin >> opcion;
+
+    return opcion;
+}
+
+void Vista::ElegirConsulta() {
+    int opcion = MenuConsultas();
+
+    switch (opcion) {
+        case 1:
+            controlador->PrimeraConsulta();
+            break;
+        case 2:
+            controlador->SegundaConsulta();
+            break;
+        case 3:
+            controlador->TeceraConsulta();
+            break;
+        case 4:
+            controlador->CuartaConsulta();
+            break;
+        case 5:
+            controlador->QuintaConsulta();
+            break;
+        default:
+            break;
+    }
 }
 
 
-int Vista::MostrarElementos(std::string* arreglo, int tam) {
+int Vista::MostrarElementos(std::string *arreglo, int tam) {
     int opcion;
 
     for (int i = 0; i < tam; i++) {
@@ -117,37 +143,33 @@ int Vista::MostrarElementos(std::string* arreglo, int tam) {
     }
 }
 
-void Vista::MenuPrimeraConsulta(int* arreglo)
-{
-    std::cout<<"Sin hijos: "<<arreglo[0]<<std::endl;
-    std::cout<<"0 a 5: "<<arreglo[1]<<std::endl;
-    std::cout<<"6 a 10: "<<arreglo[2]<<std::endl;
-    std::cout<<"11 a 18: "<<arreglo[3]<<std::endl;
-    std::cout<<"Más de 18: "<<arreglo[4]<<std::endl;
+void Vista::MenuPrimeraConsulta(int *arreglo) {
+    std::cout << "Sin hijos: " << arreglo[0] << std::endl;
+    std::cout << "0 a 5: " << arreglo[1] << std::endl;
+    std::cout << "6 a 10: " << arreglo[2] << std::endl;
+    std::cout << "11 a 18: " << arreglo[3] << std::endl;
+    std::cout << "Más de 18: " << arreglo[4] << std::endl;
 }
 
-int Vista::MenuMostrarRangosNumHijos()
-{
+int Vista::MenuMostrarRangosNumHijos() {
     int opcion;
-    std::cout<<"1. Sin hijos: "<<std::endl;
-    std::cout<<"2. 1 a 2: "<<std::endl;
-    std::cout<<"3. 3 a 4: "<<std::endl;
-    std::cout<<"4. Más de 4 : "<<std::endl;
+    std::cout << "1. Sin hijos: " << std::endl;
+    std::cout << "2. 1 a 2: " << std::endl;
+    std::cout << "3. 3 a 4: " << std::endl;
+    std::cout << "4. Más de 4 : " << std::endl;
 
-    std::cout<<"Ingresa una opción: ";
-    std::cin>>opcion;
-    return opcion;
+    std::cout << "Ingresa una opción: ";
+    std::cin >> opcion;
+    return opcion - 1;
 }
 
-void Vista::Imprimir(std::string m)
-{
-    std::cout<<m<<std::endl;
+void Vista::Imprimir(std::string m) {
+    std::cout << m << std::endl;
 }
 
-int Vista::PedirElemento()
-{
+int Vista::PedirElemento() {
     int opcion;
-    std::cout<<"Elige el número: "<<std::endl;
-    std::cin>>opcion;
+    std::cout << "Elige el número: " << std::endl;
+    std::cin >> opcion;
     return opcion;
 }

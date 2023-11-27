@@ -2,6 +2,7 @@
 
 Controlador::Controlador() {
     controlDao = new ControlDAO(this);
+    vista = new Vista(this);
 
     multilistaPaises = new MultilistaPaises(18);
 
@@ -76,24 +77,24 @@ Controlador::Controlador() {
 }
 
 void Controlador::MostrarMenu() {
-    vista.MenuGlobal();
+    vista->MenuGlobal();
 }
 
 void Controlador::PrimeraConsulta() {
 
-    int numPais = vista.MostrarElementos(multilistaPaises->getElementos(),
+    int numPais = vista->MostrarElementos(multilistaPaises->getElementos(),
                                          multilistaPaises->getSize());
 
     delete[] multilistaPaises->getElementos();
 
     Pais auxPais = multilistaPaises->getPais(numPais);
 
-    int numCiudad = vista.MostrarElementos(auxPais.ciudades->getElementos(), auxPais.ciudades->getSize());
+    int numCiudad = vista->MostrarElementos(auxPais.ciudades->getElementos(), auxPais.ciudades->getSize());
     Ciudad auxCiudad = auxPais.ciudades->getCiudad(numCiudad);
 
     auxPais.ciudades->getElementos();
 
-    int numSucursal = vista.MostrarElementos(auxCiudad.sucursales->getElementos(), auxCiudad.sucursales->getSize());
+    int numSucursal = vista->MostrarElementos(auxCiudad.sucursales->getElementos(), auxCiudad.sucursales->getSize());
     Sucursal auxSucursal = auxCiudad.sucursales->getSucursal(numSucursal);
 
     delete[] auxCiudad.sucursales->getElementos();
@@ -115,29 +116,29 @@ void Controlador::PrimeraConsulta() {
             }
         }
     }
-    vista.MenuPrimeraConsulta(arregloValidaciones);
+    vista->MenuPrimeraConsulta(arregloValidaciones);
     delete[] arregloValidaciones;
 }
 
 void Controlador::SegundaConsulta() {
-    int auxNumRango = vista.MenuMostrarRangosNumHijos();
+    std::cout<<"HOLA: "<<std::endl;
+    int auxNumRango = vista->MenuMostrarRangosNumHijos();
 
     for (int i = 0; i < multilistaPaises->getSize(); i++) {
         Pais auxPais = multilistaPaises->getPais(i);
-        vista.Imprimir(auxPais.nombre);
+        vista->Imprimir("\t"+auxPais.nombre);
 
         for (int j = 0; j < auxPais.ciudades->getSize(); j++) {
             Ciudad auxCiudad = auxPais.ciudades->getCiudad(j);
-            vista.Imprimir(auxCiudad.nombre);
+            vista->Imprimir("\t\t"+auxCiudad.nombre);
 
             for (int k = 0; k < auxCiudad.sucursales->getSize(); k++) {
                 Sucursal auxSucusal = auxCiudad.sucursales->getSucursal(k);
 
                 int indiceC = auxSucusal.empleados->getArreglosRangoHijos()[auxNumRango].indice;
 
-                while (indiceC - 1) {
-                    vista.Imprimir((auxSucusal.empleados->getEmpleado(indiceC).nombre));
-                    vista.Imprimir((auxSucusal.empleados->getEmpleado(indiceC).apellido));
+                while (indiceC != -1) {
+                    vista->Imprimir("\t\t\t"+(auxSucusal.empleados->getEmpleado(indiceC).nombre)+(auxSucusal.empleados->getEmpleado(indiceC).apellido));
                     indiceC = (auxSucusal.empleados->getEmpleado(indiceC).sigNumHijos);
                 }
             }
@@ -147,14 +148,14 @@ void Controlador::SegundaConsulta() {
 
 void Controlador::TeceraConsulta() {
 
-    int numPais = vista.MostrarElementos(multilistaPaises->getElementos(),
+    int numPais = vista->MostrarElementos(multilistaPaises->getElementos(),
                                          multilistaPaises->getSize());
 
     delete[] multilistaPaises->getElementos();
 
     Pais auxPais = multilistaPaises->getPais(numPais);
 
-    int numCiudad = vista.MostrarElementos(auxPais.ciudades->getElementos(), auxPais.ciudades->getSize());
+    int numCiudad = vista->MostrarElementos(auxPais.ciudades->getElementos(), auxPais.ciudades->getSize());
     Ciudad auxCiudad = auxPais.ciudades->getCiudad(numCiudad);
 
 
@@ -210,8 +211,8 @@ void Controlador::TeceraConsulta() {
 
         while (!actividadLaboral.IsEmpty()) {
             EstructuraAuxAL auxAl = actividadLaboral.Dequeue()->otroDato;
-            vista.Imprimir(auxCN.nombre + "-" + auxAl.actividadLaboral);
-            vista.Imprimir("\t\t"+auxAl.nombreEmpleado + "-" + auxAl.apellidoEmpleado);
+            vista->Imprimir(auxCN.nombre + "-" + auxAl.actividadLaboral);
+            vista->Imprimir("\t\t"+auxAl.nombreEmpleado + "-" + auxAl.apellidoEmpleado);
         }
     }
 
@@ -219,7 +220,7 @@ void Controlador::TeceraConsulta() {
 }
 
 void Controlador::CuartaConsulta() {
-    int numRango = vista.PedirElemento();
+    int numRango = vista->PedirElemento();
 
     struct EstructuAux {
         int numEmpleados;
@@ -258,10 +259,10 @@ void Controlador::CuartaConsulta() {
         EstructuAux auxDatos = colaSucursales.Dequeue()->otroDato;
         if(auxDatos.numEmpleados >= numRango)
         {
-            vista.Imprimir("Nombre: " + auxDatos.nombre);
-            vista.Imprimir("Nombre Gerente: "+auxDatos.nombreGerente);
-            vista.Imprimir("Barrio: "+auxDatos.barrio);
-            vista.Imprimir("Numero empleados: "+ std::to_string(auxDatos.numEmpleados) +"\n\n");
+            vista->Imprimir("Nombre: " + auxDatos.nombre);
+            vista->Imprimir("Nombre Gerente: "+auxDatos.nombreGerente);
+            vista->Imprimir("Barrio: "+auxDatos.barrio);
+            vista->Imprimir("Numero empleados: "+ std::to_string(auxDatos.numEmpleados) +"\n\n");
         }
     }
 }
@@ -269,10 +270,10 @@ void Controlador::CuartaConsulta() {
 void Controlador::QuintaConsulta() {
     for (int i = 0; i < multilistaPaises->getSize(); i++) {
         Pais auxPais = multilistaPaises->getPais(i);
-        vista.Imprimir("\t" + auxPais.nombre);
+        vista->Imprimir("\t" + auxPais.nombre);
         for (int j = 0; j < auxPais.ciudades->getSize(); j++) {
             Ciudad auxCiudad = auxPais.ciudades->getCiudad(j);
-            vista.Imprimir("\t\t" + auxCiudad.nombre);
+            vista->Imprimir("\t\t" + auxCiudad.nombre);
             for (int k = 0; k < auxCiudad.sucursales->getSize(); k++) {
                 Sucursal auxSucusal = auxCiudad.sucursales->getSucursal(k);
 
@@ -283,10 +284,10 @@ void Controlador::QuintaConsulta() {
                 std::string numMujeres =
                         "\t\t\t\tNúmero de Mujeres " + std::to_string(auxSucusal.empleados->getNumMujeres());
 
-                vista.Imprimir(nombreSucursal);
-                vista.Imprimir(nombreSucursalG);
-                vista.Imprimir(numHombre);
-                vista.Imprimir(numMujeres);
+                vista->Imprimir(nombreSucursal);
+                vista->Imprimir(nombreSucursalG);
+                vista->Imprimir(numHombre);
+                vista->Imprimir(numMujeres);
             }
         }
     }
