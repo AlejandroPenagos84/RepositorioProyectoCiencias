@@ -1,0 +1,7 @@
+*.layout
+*.win
+*.o
+*.exe
+*cmake-build-debug/
+*CMakeLists.txt
+*.idea/
