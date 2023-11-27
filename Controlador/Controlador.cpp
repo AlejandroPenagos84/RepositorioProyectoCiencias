@@ -21,13 +21,13 @@ Controlador::Controlador() {
 
     // Obtención de árboles y colas
     RBTree<int, Empleado> *arbolEmpleados = controlDao->getEmpleadosLlaveF();
-    RBTree<int, Sucursal> *arbolSucursales = controlDao->getSucurcalesLlaveF();
+    RBTree<int, Sucursal> *arbolSucursales = controlDao->getSucursalesLlaveF();
     RBTree<int, Ciudad> *arbolCiudades = controlDao->getCiudadesLlaveF();
     RBTree<int, Pais> *arbolPaises = controlDao->getPaises();
 
     Queue<Nodo<int, Hijo> *> colaHijosF = controlDao->getHijosLlaveF()->inorden();
     Queue<Nodo<int, Empleado> *> colaEmpleadosF = controlDao->getEmpleadosLlaveF()->inorden();
-    Queue<Nodo<int, Sucursal> *> colaSucursalesF = controlDao->getSucurcalesLlaveF()->inorden();
+    Queue<Nodo<int, Sucursal> *> colaSucursalesF = controlDao->getSucursalesLlaveF()->inorden();
     Queue<Nodo<int, Ciudad> *> colaCiudadesF = controlDao->getCiudadesLlaveF()->inorden();
     Queue<Nodo<int, Pais> *> colaPaisesF = controlDao->getPaises()->inorden();
 
