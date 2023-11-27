@@ -100,13 +100,18 @@ void Controlador::PrimeraConsulta() {
     delete[] auxCiudad.sucursales->getElementos();
     int *arregloValidaciones = new int[5];
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++) {
         arregloValidaciones[i] = 0;
+    }
 
     for (int i = 0; i < auxSucursal.empleados->getNumEmpleados(); i++) {
         Empleado auxEmpleado = auxSucursal.empleados->getEmpleado(i);
-        if (auxEmpleado.estado) {
-            if (auxEmpleado.tieneHijos == 'N') arregloValidaciones[0]++;
+        if (auxEmpleado.estado)
+        {
+            if (auxEmpleado.tieneHijos == 'N')
+            {
+                arregloValidaciones[0]++;
+            }
             else {
                 for (int k = 0; k < 4; k++) {
                     if (auxEmpleado.hijos->getCabecera()[k].indice != -1) {
