@@ -1,95 +1,60 @@
 #ifndef EMPLEADO_H
 #define EMPLEADO_H
+
 #include "Edad.h"
 #include "../Multilistas/MultilistaHijos/MultilistaHijo.h"
 #include <string>
 
+/**
+ * @brief Estructura que representa a un empleado.
+ */
 struct Empleado {
-    int pk;
-    int fk;
+    int pk; ///< Clave primaria del empleado.
+    int fk; ///< Clave foránea del empleado.
 
-    std::string nombre;
-    std::string apellido;
-    std::string tipoIdentificacion;
-    std::string numIdentificacion;
-    char sexo;
-    std::string telefonoCelular;
-    std::string telefonoFijo;
-    std::string email;
+    std::string nombre; ///< Nombre del empleado.
+    std::string apellido; ///< Apellido del empleado.
+    std::string tipoIdentificacion; ///< Tipo de identificación del empleado.
+    std::string numIdentificacion; ///< Número de identificación del empleado.
+    char sexo; ///< Género del empleado.
+    std::string telefonoCelular; ///< Número de teléfono celular del empleado.
+    std::string telefonoFijo; ///< Número de teléfono fijo del empleado.
+    std::string email; ///< Correo electrónico del empleado.
 
-    std::string ciudadNacimiento;
-    std::string paisNacimiento;
-    std::string ciudadResidencia;
-    std::string direccion;
-    //
-    char tieneHijos;
-    std::string actividadLaboral;
-    std::string sucursalTrabajo;
-    std::string barrio;
-    int numHijos;
-    std::string fechaNacimiento;
-    bool estado;
-    MultilistaHijo* hijos;
-    int edad;
+    std::string ciudadNacimiento; ///< Ciudad de nacimiento del empleado.
+    std::string paisNacimiento; ///< País de nacimiento del empleado.
+    std::string ciudadResidencia; ///< Ciudad de residencia del empleado.
+    std::string direccion; ///< Dirección del empleado.
 
+    char tieneHijos; ///< Indica si el empleado tiene hijos o no.
+    std::string actividadLaboral; ///< Actividad laboral del empleado.
+    std::string sucursalTrabajo; ///< Sucursal de trabajo del empleado.
+    std::string barrio; ///< Barrio de residencia del empleado.
+    int numHijos; ///< Número de hijos del empleado.
+    std::string fechaNacimiento; ///< Fecha de nacimiento del empleado.
+    bool estado; ///< Estado del empleado (activo/inactivo).
+    MultilistaHijo* hijos; ///< Multilista que almacena la información de los hijos del empleado.
+    int edad; ///< Edad del empleado.
 
-    // Estas variable se inicializan con 0 para evitar doble asignacion
-    // Con estas se va manejar la posicion del siguiente dato segun la caracteristica de este
-    int sigSexo{-1};
-    int sigActividadLaboral{-1};
-    int sigEdad{-1};
-    int sigNombreSurcursal{-1};
-    int sigCiudadNacimiento{-1};
-    int sigBarrio{-1};
-    int sigNumHijos{-1};
+    // Estas variables se inicializan con -1 para indicar que no tienen un siguiente dato asociado.
+    int sigSexo{-1}; ///< Índice del siguiente empleado por género.
+    int sigActividadLaboral{-1}; ///< Índice del siguiente empleado por actividad laboral.
+    int sigEdad{-1}; ///< Índice del siguiente empleado por edad.
+    int sigNombreSurcursal{-1}; ///< Índice del siguiente empleado por sucursal de trabajo.
+    int sigCiudadNacimiento{-1}; ///< Índice del siguiente empleado por ciudad de nacimiento.
+    int sigBarrio{-1}; ///< Índice del siguiente empleado por barrio de residencia.
+    int sigNumHijos{-1}; ///< Índice del siguiente empleado por número de hijos.
 
+    /**
+     * @brief Constructor por defecto de la estructura Empleado.
+     */
     Empleado()
-     {
-                    hijos = new MultilistaHijo(5);
-     }
-
-    // Constructor para inicializar los datos de un empleado
-    Empleado(std::string nombre,
-             std::string apellido,
-             std::string tipoIdentificacion,
-             std::string numIdentificacion,
-             char sexo,
-             std::string telefonoCelular,
-             std::string telefonoFijo,
-             std::string email,
-             std::string ciudadNacimiento,
-             std::string paisNacimiento,
-             std::string ciudadResidencia,
-             std::string direccion,
-             char tieneHijos,
-             std::string actividadLaboral,
-             std::string sucursalTrabajo,
-             std::string barrio,
-             int numHijos,
-             std::string fechaNacimiento)
-        : nombre(std::move(nombre)),
-          apellido(std::move(apellido)),
-          tipoIdentificacion(std::move(tipoIdentificacion)),
-          numIdentificacion(std::move(numIdentificacion)),
-          sexo(sexo),
-          telefonoCelular(std::move(telefonoCelular)),
-          telefonoFijo(std::move(telefonoFijo)),
-          email(std::move(email)),
-          ciudadNacimiento(std::move(ciudadNacimiento)),
-          paisNacimiento(std::move(paisNacimiento)),
-          ciudadResidencia(std::move(ciudadResidencia)),
-          direccion(std::move(direccion)),
-          tieneHijos(tieneHijos),
-          actividadLaboral(std::move(actividadLaboral)),
-          sucursalTrabajo(std::move(sucursalTrabajo)),
-          barrio(std::move(barrio)),
-          numHijos(numHijos),
-          fechaNacimiento(std::move(fechaNacimiento)),
-          estado(true){
+    {
+        // Se inicializa la multilista de hijos con un límite de 5 hijos por empleado.
         hijos = new MultilistaHijo(5);
+        // Se calcula la edad del empleado en base a la fecha de nacimiento.
         edad = calcularEdad(obtenerFechaDesdeString(fechaNacimiento));
     }
 };
-
 
 #endif

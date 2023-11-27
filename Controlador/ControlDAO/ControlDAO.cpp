@@ -1,46 +1,54 @@
 #include "ControlDAO.h"
 
 ControlDAO::ControlDAO(Controlador *ctrl) : control(ctrl) {
-    //Arboles con llaves secundarias y los datos completos
+    // Arboles con llaves secundarias y los datos completos
     hijosLlaveF = new RBTree<int, Hijo>;
     empleadosLlaveF = new RBTree<int, Empleado>;
-    sucurcalesLlaveF = new RBTree<int, Sucursal>;
+    sucursalesLlaveF = new RBTree<int, Sucursal>;
     ciudadesLlaveF = new RBTree<int, Ciudad>;
     paises = new RBTree<int, Pais>;
     pos = 0;
 }
 
+/**
+ * @brief Convierte un valor entero a un valor booleano.
+ * @param value Valor entero a convertir.
+ * @return Valor booleano resultante.
+ */
 bool intToBool(int value) {
     // Convierte cualquier valor distinto de cero a true, y cero a false
     return (value != 0);
 }
 
-// Function to read CSV file and return a vector of CsvRow
+/**
+ * @brief Lee los datos de los hijos desde un archivo CSV.
+ * @param filename Nombre del archivo a leer.
+ */
 void ControlDAO::LeerHijosDAO(const std::string &filename) {
     hijosLlaveF;
     pos = 0;
-    // Open the CSV file
+    // Abrir el archivo CSV
     std::ifstream file(filename);
 
-    // Check if the file is open
+    // Verificar si el archivo está abierto
     if (!file.is_open()) {
-        std::cerr << "Error opening file!" << std::endl;
-        //return data; // Return an empty vector since there was an error
+        std::cerr << "Error al abrir el archivo!" << std::endl;
+        // return data; // Devolver un vector vacío ya que hubo un error
     }
 
-    // Read the file line by line
+    // Leer el archivo línea por línea
     std::string line;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::vector<std::string> columns;
 
-        // Split the line into columns using a comma as the delimiter
+        // Dividir la línea en columnas usando una coma como delimitador
         std::string column;
         while (std::getline(ss, column, ',')) {
             columns.push_back(column);
         }
 
-        // Create a CsvRow and populate it with the values
+        // Crear un objeto Hijo y llenarlo con los valores
         Hijo row;
         if (columns.size() >= 5) {
             try {
@@ -50,43 +58,46 @@ void ControlDAO::LeerHijosDAO(const std::string &filename) {
                 row.fechaNacimiento = column[3];
                 row.estado = intToBool(std::stoi(columns[4]));
 
-                // Add the row to the data vector
+                // Agregar la fila al árbol
                 hijosLlaveF->Insert(hijosLlaveF, hijosLlaveF->createNodo(row.pk, row));
                 pos++;
             } catch (const std::invalid_argument &e) {
-                std::cerr << "Error converting column values to integers: " << e.what() << std::endl;
+                std::cerr << "Error al convertir los valores de las columnas a enteros: " << e.what() << std::endl;
             }
         }
     }
-    // Close the file
+    // Cerrar el archivo
     file.close();
 }
 
-
+/**
+ * @brief Lee los datos de los empleados desde un archivo CSV.
+ * @param filename Nombre del archivo a leer.
+ */
 void ControlDAO::LeerEmpleadosDAO(const std::string &filename) {
     pos = 0;
-    // Open the CSV file
+    // Abrir el archivo CSV
     std::ifstream file(filename);
 
-    // Check if the file is open
+    // Verificar si el archivo está abierto
     if (!file.is_open()) {
-        std::cerr << "Error opening file!" << std::endl;
-        //return data; // Return an empty vector since there was an error
+        std::cerr << "Error al abrir el archivo!" << std::endl;
+        // return data; // Devolver un vector vacío ya que hubo un error
     }
 
-    // Read the file line by line
+    // Leer el archivo línea por línea
     std::string line;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::vector<std::string> columns;
 
-        // Split the line into columns using a comma as the delimiter
+        // Dividir la línea en columnas usando una coma como delimitador
         std::string column;
         while (std::getline(ss, column, ',')) {
             columns.push_back(column);
         }
 
-        // Create a CsvRow and populate it with the values
+        // Crear un objeto Empleado y llenarlo con los valores
         Empleado row;
         if (columns.size() >= 21) {
             try {
@@ -96,7 +107,7 @@ void ControlDAO::LeerEmpleadosDAO(const std::string &filename) {
                 row.apellido = columns[3];
                 row.tipoIdentificacion = columns[4];
                 row.numIdentificacion = columns[5];
-                row.sexo = columns[6][0];;
+                row.sexo = columns[6][0];
                 row.telefonoCelular = columns[7];
                 row.telefonoFijo = columns[8];
                 row.email = columns[9];
@@ -112,45 +123,47 @@ void ControlDAO::LeerEmpleadosDAO(const std::string &filename) {
                 row.fechaNacimiento = columns[19];
                 row.estado = intToBool(std::stoi(columns[20]));
 
-
-                // Add the row to the data vector
+                // Agregar la fila al árbol
                 empleadosLlaveF->Insert(empleadosLlaveF, empleadosLlaveF->createNodo(row.pk, row));
                 pos++;
             } catch (const std::invalid_argument &e) {
-                std::cerr << "Error converting column values to integers: " << e.what() << std::endl;
+                std::cerr << "Error al convertir los valores de las columnas a enteros: " << e.what() << std::endl;
             }
         }
     }
 
-    // Close the file
+    // Cerrar el archivo
     file.close();
 }
 
-
+/**
+ * @brief Lee los datos de las sucursales desde un archivo CSV.
+ * @param filename Nombre del archivo a leer.
+ */
 void ControlDAO::LeerSucursalesDAO(const std::string &filename) {
     pos = 0;
-    // Open the CSV file
+    // Abrir el archivo CSV
     std::ifstream file(filename);
 
-    // Check if the file is open
+    // Verificar si el archivo está abierto
     if (!file.is_open()) {
-        std::cerr << "Error opening file!" << std::endl;
-        //return data; // Return an empty vector since there was an error
+        std::cerr << "Error al abrir el archivo!" << std::endl;
+        // return data; // Devolver un vector vacío ya que hubo un error
     }
 
-    // Read the file line by line
+    // Leer el archivo línea por línea
     std::string line;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::vector<std::string> columns;
 
-        // Split the line into columns using a comma as the delimiter
+        // Dividir la línea en columnas usando una coma como delimitador
         std::string column;
         while (std::getline(ss, column, ',')) {
             columns.push_back(column);
         }
 
-        // Create a CsvRow and populate it with the values
+        // Crear un objeto Sucursal y llenarlo con los valores
         Sucursal row;
         if (columns.size() >= 7) {
             try {
@@ -162,43 +175,47 @@ void ControlDAO::LeerSucursalesDAO(const std::string &filename) {
                 row.nombreGerente = (columns[5]);
                 row.estado = intToBool(std::stoi(columns[6]));
 
-                // Add the row to the data vector
-                sucurcalesLlaveF->Insert(sucurcalesLlaveF, sucurcalesLlaveF->createNodo(row.pk, row));
+                // Agregar la fila al árbol
+                sucursalesLlaveF->Insert(sucursalesLlaveF, sucursalesLlaveF->createNodo(row.pk, row));
                 pos++;
             } catch (const std::invalid_argument &e) {
-                std::cerr << "Error converting column values to integers: " << e.what() << std::endl;
+                std::cerr << "Error al convertir los valores de las columnas a enteros: " << e.what() << std::endl;
             }
         }
     }
-    // Close the file
+    // Cerrar el archivo
     file.close();
-    //return data;
+    // return data;
 }
 
+/**
+ * @brief Lee los datos de las ciudades desde un archivo CSV.
+ * @param filename Nombre del archivo a leer.
+ */
 void ControlDAO::LeerCiudadesDAO(const std::string &filename) {
     pos = 0;
-    // Open the CSV file
+    // Abrir el archivo CSV
     std::ifstream file(filename);
 
-    // Check if the file is open
+    // Verificar si el archivo está abierto
     if (!file.is_open()) {
-        std::cerr << "Error opening file!" << std::endl;
-        //return data; // Return an empty vector since there was an error
+        std::cerr << "Error al abrir el archivo!" << std::endl;
+        // return data; // Devolver un vector vacío ya que hubo un error
     }
 
-    // Read the file line by line
+    // Leer el archivo línea por línea
     std::string line;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::vector<std::string> columns;
 
-        // Split the line into columns using a comma as the delimiter
+        // Dividir la línea en columnas usando una coma como delimitador
         std::string column;
         while (std::getline(ss, column, ',')) {
             columns.push_back(column);
         }
 
-        // Create a CsvRow and populate it with the values
+        // Crear un objeto Ciudad y llenarlo con los valores
         Ciudad row;
         if (columns.size() >= 4) {
             try {
@@ -207,44 +224,47 @@ void ControlDAO::LeerCiudadesDAO(const std::string &filename) {
                 row.nombre = (columns[2]);
                 row.estado = intToBool(std::stoi(columns[3]));
 
-                // Add the row to the data vector
+                // Agregar la fila al árbol
                 ciudadesLlaveF->Insert(ciudadesLlaveF, ciudadesLlaveF->createNodo(row.pk, row));
                 pos++;
             } catch (const std::invalid_argument &e) {
-                std::cerr << "Error converting column values to integers: " << e.what() << std::endl;
+                std::cerr << "Error al convertir los valores de las columnas a enteros: " << e.what() << std::endl;
             }
         }
     }
-    // Close the file
+    // Cerrar el archivo
     file.close();
-    //return data;
+    // return data;
 }
 
-
+/**
+ * @brief Lee los datos de los países desde un archivo CSV.
+ * @param filename Nombre del archivo a leer.
+ */
 void ControlDAO::LeerPaisesDAO(const std::string &filename) {
     pos = 0;
-    // Open the CSV file
+    // Abrir el archivo CSV
     std::ifstream file(filename);
 
-    // Check if the file is open
+    // Verificar si el archivo está abierto
     if (!file.is_open()) {
-        std::cerr << "Error opening file!" << std::endl;
-        //return data; // Return an empty vector since there was an error
+        std::cerr << "Error al abrir el archivo!" << std::endl;
+        // return data; // Devolver un vector vacío ya que hubo un error
     }
 
-    // Read the file line by line
+    // Leer el archivo línea por línea
     std::string line;
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::vector<std::string> columns;
 
-        // Split the line into columns using a comma as the delimiter
+        // Dividir la línea en columnas usando una coma como delimitador
         std::string column;
         while (std::getline(ss, column, ',')) {
             columns.push_back(column);
         }
 
-        // Create a CsvRow and populate it with the values
+        // Crear un objeto País y llenarlo con los valores
         Pais row;
         if (columns.size() >= 3) {
             try {
@@ -252,39 +272,65 @@ void ControlDAO::LeerPaisesDAO(const std::string &filename) {
                 row.nombre = (columns[1]);
                 row.estado = intToBool(std::stoi(columns[2]));
 
-                // Add the row to the data vector
+                // Agregar la fila al árbol
                 paises->Insert(paises, paises->createNodo(row.pk, row));
                 pos++;
             } catch (const std::invalid_argument &e) {
-                std::cerr << "Error converting column values to integers: " << e.what() << std::endl;
+                std::cerr << "Error al convertir los valores de las columnas a enteros: " << e.what() << std::endl;
             }
         }
     }
-    // Close the file
+    // Cerrar el archivo
     file.close();
-    //return data;
+    // return data;
 }
 
+/**
+ * @brief Obtiene el árbol de hijos con llave primaria.
+ * @return Puntero al árbol de hijos con llave primaria.
+ */
 RBTree<int, Hijo> *ControlDAO::getHijosLlaveF() const {
     return hijosLlaveF;
 }
 
+/**
+ * @brief Obtiene el árbol de empleados con llave primaria.
+ * @return Puntero al árbol de empleados con llave primaria.
+ */
 RBTree<int, Empleado> *ControlDAO::getEmpleadosLlaveF() const {
     return empleadosLlaveF;
 }
 
-RBTree<int, Sucursal> *ControlDAO::getSucurcalesLlaveF() const {
-    return sucurcalesLlaveF;
+/**
+ * @brief Obtiene el árbol de sucursales con llave primaria.
+ * @return Puntero al árbol de sucursales con llave primaria.
+ */
+RBTree<int, Sucursal> *ControlDAO::getSucursalesLlaveF() const {
+    return sucursalesLlaveF;
 }
 
+/**
+ * @brief Obtiene el árbol de ciudades con llave primaria.
+ * @return Puntero al árbol de ciudades con llave primaria.
+ */
 RBTree<int, Ciudad> *ControlDAO::getCiudadesLlaveF() const {
     return ciudadesLlaveF;
 }
 
+/**
+ * @brief Obtiene el árbol de países con llave primaria.
+ * @return Puntero al árbol de países con llave primaria.
+ */
 RBTree<int, Pais> *ControlDAO::getPaises() const {
     return paises;
 }
 
+/**
+ * @brief Modifica los datos de un hijo en el archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param updatedData Datos actualizados del hijo.
+ */
 void ControlDAO::ModificarHijoDAO(const std::string &filename, const Hijo &updatedData) {
     // Abrir el archivo CSV existente para lectura y escritura
     std::ifstream inputFile(filename);
@@ -306,7 +352,7 @@ void ControlDAO::ModificarHijoDAO(const std::string &filename, const Hijo &updat
 
     // Buscar y modificar la fila que coincide con la clave primaria
     bool found = false;
-    for (std::string &row: lines) {
+    for (std::string &row : lines) {
         std::istringstream iss(row);
         std::vector<std::string> columns;
 
@@ -340,7 +386,7 @@ void ControlDAO::ModificarHijoDAO(const std::string &filename, const Hijo &updat
     std::ofstream outputFile(filename);
 
     // Escribir todas las líneas (modificadas y no modificadas) en el archivo
-    for (const std::string &row: lines) {
+    for (const std::string &row : lines) {
         outputFile << row << "\n";
     }
 
@@ -350,6 +396,12 @@ void ControlDAO::ModificarHijoDAO(const std::string &filename, const Hijo &updat
     std::cout << "CSV file updated successfully!" << std::endl;
 }
 
+/**
+ * @brief Modifica los datos de un empleado en el archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param updatedData Datos actualizados del empleado.
+ */
 void ControlDAO::ModificarEmpleadoDAO(const std::string &filename, const Empleado &updatedData) {
     // Abrir el archivo CSV existente para lectura y escritura
     std::ifstream inputFile(filename);
@@ -371,7 +423,7 @@ void ControlDAO::ModificarEmpleadoDAO(const std::string &filename, const Emplead
 
     // Buscar y modificar la fila que coincide con la clave primaria
     bool found = false;
-    for (std::string &row: lines) {
+    for (std::string &row : lines) {
         std::istringstream iss(row);
         std::vector<std::string> columns;
 
@@ -422,7 +474,7 @@ void ControlDAO::ModificarEmpleadoDAO(const std::string &filename, const Emplead
     std::ofstream outputFile(filename);
 
     // Escribir todas las líneas (modificadas y no modificadas) en el archivo
-    for (const std::string &row: lines) {
+    for (const std::string &row : lines) {
         outputFile << row << "\n";
     }
 
@@ -432,6 +484,12 @@ void ControlDAO::ModificarEmpleadoDAO(const std::string &filename, const Emplead
     std::cout << "CSV file updated successfully!" << std::endl;
 }
 
+/**
+ * @brief Modifica los datos de una sucursal en el archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param updatedData Datos actualizados de la sucursal.
+ */
 void ControlDAO::ModificarSucursalDAO(const std::string &filename, const Sucursal &updatedData) {
     // Abrir el archivo CSV existente para lectura y escritura
     std::ifstream inputFile(filename);
@@ -453,7 +511,7 @@ void ControlDAO::ModificarSucursalDAO(const std::string &filename, const Sucursa
 
     // Buscar y modificar la fila que coincide con la clave primaria
     bool found = false;
-    for (std::string &row: lines) {
+    for (std::string &row : lines) {
         std::istringstream iss(row);
         std::vector<std::string> columns;
 
@@ -490,7 +548,7 @@ void ControlDAO::ModificarSucursalDAO(const std::string &filename, const Sucursa
     std::ofstream outputFile(filename);
 
     // Escribir todas las líneas (modificadas y no modificadas) en el archivo
-    for (const std::string &row: lines) {
+    for (const std::string &row : lines) {
         outputFile << row << "\n";
     }
 
@@ -500,13 +558,17 @@ void ControlDAO::ModificarSucursalDAO(const std::string &filename, const Sucursa
     std::cout << "CSV file updated successfully!" << std::endl;
 }
 
-
-void ControlDAO::ModificarCiudadDAO(const std::string &filename, const Ciudad &updatedData)
-{
+/**
+ * @brief Modifica los datos de una ciudad en el archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param updatedData Datos actualizados de la ciudad.
+ */
+void ControlDAO::ModificarCiudadDAO(const std::string &filename, const Ciudad &updatedData) {
     // Abrir el archivo CSV existente para lectura y escritura
     std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
-        std::cerr << "Error opening file for reading!" << std::endl;
+        std::cerr << "Error abriendo el archivo para lectura!" << std::endl;
         return;
     }
 
@@ -523,7 +585,7 @@ void ControlDAO::ModificarCiudadDAO(const std::string &filename, const Ciudad &u
 
     // Buscar y modificar la fila que coincide con la clave primaria
     bool found = false;
-    for (std::string &row: lines) {
+    for (std::string &row : lines) {
         std::istringstream iss(row);
         std::vector<std::string> columns;
 
@@ -549,7 +611,7 @@ void ControlDAO::ModificarCiudadDAO(const std::string &filename, const Ciudad &u
 
     // Si no se encontró la clave primaria, imprimir un mensaje y salir
     if (!found) {
-        std::cerr << "Primary key not found!" << std::endl;
+        std::cerr << "Clave primaria no encontrada!" << std::endl;
         return;
     }
 
@@ -557,16 +619,22 @@ void ControlDAO::ModificarCiudadDAO(const std::string &filename, const Ciudad &u
     std::ofstream outputFile(filename);
 
     // Escribir todas las líneas (modificadas y no modificadas) en el archivo
-    for (const std::string &row: lines) {
+    for (const std::string &row : lines) {
         outputFile << row << "\n";
     }
 
     // Cerrar el archivo de salida
     outputFile.close();
 
-    std::cout << "CSV file updated successfully!" << std::endl;
+    std::cout << "Archivo CSV actualizado exitosamente!" << std::endl;
 }
 
+/**
+ * @brief Modifica los datos de un país en el archivo CSV.
+ *
+ * @param filename Nombre del archivo CSV.
+ * @param updatedData Datos actualizados del país.
+ */
 void ControlDAO::ModificarPaisDAO(const std::string &filename, const Pais &updatedData) {
     // Abrir el archivo CSV existente para lectura y escritura
     std::ifstream inputFile(filename);
@@ -588,7 +656,7 @@ void ControlDAO::ModificarPaisDAO(const std::string &filename, const Pais &updat
 
     // Buscar y modificar la fila que coincide con la clave primaria
     bool found = false;
-    for (std::string &row: lines) {
+    for (std::string &row : lines) {
         std::istringstream iss(row);
         std::vector<std::string> columns;
 
@@ -621,7 +689,7 @@ void ControlDAO::ModificarPaisDAO(const std::string &filename, const Pais &updat
     std::ofstream outputFile(filename);
 
     // Escribir todas las líneas (modificadas y no modificadas) en el archivo
-    for (const std::string &row: lines) {
+    for (const std::string &row : lines) {
         outputFile << row << "\n";
     }
 

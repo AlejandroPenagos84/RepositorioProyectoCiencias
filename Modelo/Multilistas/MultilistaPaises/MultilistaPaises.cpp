@@ -4,7 +4,9 @@
 
 MultilistaPaises::MultilistaPaises(int max) {
     /**
-     * @brief Constructor de la clase.
+     * @brief Constructor de la clase MultilistaPaises.
+     *
+     * Inicializa la multilista de países con un tamaño máximo especificado.
      *
      * @param max Tamaño máximo del arreglo de países.
      */
@@ -18,13 +20,11 @@ void MultilistaPaises::AgregarPais(Pais pais) {
     /**
      * @brief Agrega un país a la multilista.
      *
-     * @param nombre Nombre del país.
+     * @param pais El país a agregar.
      */
 
-    // Crear una nueva multilista de ciudades para el país
-
+    // Agregar el país al arreglo
     paises[posLibre] = std::move(pais);
-
 
     // Incrementar posición libre y tamaño
     posLibre++;
@@ -45,6 +45,8 @@ void MultilistaPaises::EliminarPais(int indiceArray) {
 void MultilistaPaises::ModificarPais(int num, std::string nuevoDato, int indiceArray) {
     /**
      * @brief Modifica un país en la multilista.
+     *
+     * Modifica una propiedad específica de un país en la multilista.
      *
      * @param num Número de la propiedad a modificar.
      * @param nuevoDato Nuevo valor para la propiedad.
@@ -67,13 +69,24 @@ Pais MultilistaPaises::getPais(int indiceArray) {
     return paises[indiceArray];
 }
 
-int MultilistaPaises::getSize() {return size;}
+int MultilistaPaises::getSize() {
+    /**
+     * @brief Obtiene el tamaño actual de la multilista.
+     *
+     * @return El tamaño actual de la multilista.
+     */
+    return size;
+}
 
-std::string* MultilistaPaises::getElementos()
-{
+std::string* MultilistaPaises::getElementos() {
+    /**
+     * @brief Obtiene un arreglo con los nombres de los paises
+     *
+     * @return El nombre de los paises
+     */
     std::string* arreglo = new std::string[size];
 
-    for(int i =0; i<size;i++)
+    for (int i = 0; i < size; i++)
         arreglo[i] = paises[i].nombre;
 
     return arreglo;

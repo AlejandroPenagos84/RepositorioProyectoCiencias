@@ -1,15 +1,24 @@
 #include "Vista.h"
+
 // Configurar según la localización del sistema
 
-Vista::Vista(Controlador *ctrl){
+/**
+ * @brief Constructor de la clase Vista.
+ * @param ctrl Puntero a un objeto de la clase Controlador.
+ */
+Vista::Vista(Controlador *ctrl) {
     controlador = ctrl;
 }
 
+/**
+ * @brief Método que representa el menú global de la aplicación.
+ * Permite al usuario realizar diversas acciones como ingresar datos, realizar consultas, o salir del programa.
+ */
 void Vista::MenuGlobal() {
     while (true) {
         switch (MostrarMenu()) {
             default:
-                std::cout << "Opcion no valida" << std::endl;
+                Imprimir("Opcion no valida");
                 break; // Agrega un break aquí para salir del switch
 
             case 1:
@@ -27,44 +36,55 @@ void Vista::MenuGlobal() {
     }
 }
 
+/**
+ * @brief Método que muestra un menú con opciones y devuelve la opción seleccionada por el usuario.
+ * @return Opción seleccionada por el usuario.
+ */
 int Vista::MostrarMenu() {
     int num;
-    std::cout << "Sucursales" << std::endl;
-    std::cout << "\t1. Ingresar nuevos datos: " << std::endl;
-    std::cout << "\t2. Consultar: " << std::endl;
-    std::cout << "\t3. Salir: " << std::endl;
-    std::cout << "Ingresa una opción: ";
+    Imprimir("Sucursales");
+    Imprimir("\t1. Ingresar nuevos datos:");
+    Imprimir("\t2. Consultar:");
+    Imprimir("\t3. Salir:");
+    Imprimir("Ingresa una opción: ");
 
     std::cin >> num;
     return num;
 }
 
+/**
+ * @brief Método para ingresar datos en el formulario.
+ * Captura información sobre empleados y sucursales.
+ */
 void Vista::IngresarDatos() {
     int numEmpleados;
-    std::cout << "Ingrese el número de empleados: ";
+    Imprimir("Ingrese el número de empleados: ");
     std::cin >> numEmpleados;
     std::cin.ignore(); // Limpiar el buffer del teclado
 
     //List<Empleado> empleados;
     for (int i = 0; i < numEmpleados; ++i) {
-        std::cout << "\nCapturando información del empleado " << i + 1 << ":\n";
+        Imprimir("\nCapturando información del empleado " + std::to_string(i + 1) + ":");
         //empleados.addLast(formulario.capturarInfoEmpleado());
     }
 
     // Capturar información de sucursales
     int numSucursales;
-    std::cout << "\nIngrese el número de sucursales: ";
+    Imprimir("\nIngrese el número de sucursales: ");
     std::cin >> numSucursales;
     std::cin.ignore(); // Limpiar el buffer del teclado
 
     //List<Sucursal> sucursales;
     for (int i = 0; i < numSucursales; ++i) {
-        std::cout << "\nCapturando información de la sucursal " << i + 1 << ":\n";
+        Imprimir("\nCapturando información de la sucursal " + std::to_string(i + 1) + ":");
         //sucursales.addLast(formulario.capturarInformacionSucursal());
     }
 }
 
-
+/**
+ * @brief Método que muestra un menú de consultas y devuelve la opción seleccionada por el usuario.
+ * @return Opción seleccionada por el usuario.
+ */
 int Vista::MenuConsultas() {
     int opcion;
     std::cout << "Consultas" << std::endl;
@@ -93,6 +113,9 @@ int Vista::MenuConsultas() {
     return opcion;
 }
 
+/**
+ * @brief Método que ejecuta una consulta específica según la opción seleccionada por el usuario.
+ */
 void Vista::ElegirConsulta() {
     int opcion = MenuConsultas();
 
@@ -117,16 +140,21 @@ void Vista::ElegirConsulta() {
     }
 }
 
-
+/**
+ * @brief Método que muestra elementos de un arreglo de cadenas y devuelve la opción seleccionada por el usuario.
+ * @param arreglo Arreglo de cadenas a mostrar.
+ * @param tam Tamaño del arreglo.
+ * @return Opción seleccionada por el usuario.
+ */
 int Vista::MostrarElementos(std::string *arreglo, int tam) {
     int opcion;
 
     for (int i = 0; i < tam; i++) {
-        std::cout << (i + 1) << ". " << arreglo[i] << std::endl;
+        Imprimir(std::to_string(i + 1) + ". " + arreglo[i]);
     }
 
     while (true) {
-        std::cout << "Ingrese su opción: ";
+        Imprimir("Ingrese su opción: ");
         std::cin >> opcion;
 
         if (std::cin.fail()) {
@@ -139,37 +167,53 @@ int Vista::MostrarElementos(std::string *arreglo, int tam) {
         }
 
         // Mostrar mensaje de error y repetir el bucle
-        std::cout << "Opción inválida. Intente de nuevo." << std::endl;
+        Imprimir("Opción inválida. Intente de nuevo.");
     }
 }
 
+/**
+ * @brief Método que muestra el resultado de la primera consulta.
+ * @param arreglo Arreglo de resultados de la consulta.
+ */
 void Vista::MenuPrimeraConsulta(int *arreglo) {
-    std::cout << "Sin hijos: " << arreglo[0] << std::endl;
-    std::cout << "0 a 5: " << arreglo[1] << std::endl;
-    std::cout << "6 a 10: " << arreglo[2] << std::endl;
-    std::cout << "11 a 18: " << arreglo[3] << std::endl;
-    std::cout << "Más de 18: " << arreglo[4] << std::endl;
+    Imprimir("Sin hijos: " + std::to_string(arreglo[0]));
+    Imprimir("0 a 5: " + std::to_string(arreglo[1]));
+    Imprimir("6 a 10: " + std::to_string(arreglo[2]));
+    Imprimir("11 a 18: " + std::to_string(arreglo[3]));
+    Imprimir("Más de 18: " + std::to_string(arreglo[4]));
 }
 
+/**
+ * @brief Método que muestra un menú para seleccionar rangos de número de hijos.
+ * @return Opción seleccionada por el usuario.
+ */
 int Vista::MenuMostrarRangosNumHijos() {
     int opcion;
-    std::cout << "1. Sin hijos: " << std::endl;
-    std::cout << "2. 1 a 2: " << std::endl;
-    std::cout << "3. 3 a 4: " << std::endl;
-    std::cout << "4. Más de 4 : " << std::endl;
+    Imprimir("1. Sin hijos: ");
+    Imprimir("2. 1 a 2: ");
+    Imprimir("3. 3 a 4: ");
+    Imprimir("4. Más de 4 : ");
 
-    std::cout << "Ingresa una opción: ";
+    Imprimir("Ingresa una opción: ");
     std::cin >> opcion;
     return opcion - 1;
 }
 
+/**
+ * @brief Método estático para imprimir mensajes en la consola.
+ * @param m Mensaje a imprimir.
+ */
 void Vista::Imprimir(std::string m) {
     std::cout << m << std::endl;
 }
 
+/**
+ * @brief Método que solicita al usuario ingresar un número.
+ * @return Número ingresado por el usuario.
+ */
 int Vista::PedirElemento() {
     int opcion;
-    std::cout << "Elige el número: " << std::endl;
+    Imprimir("Elige el número: ");
     std::cin >> opcion;
     return opcion;
 }

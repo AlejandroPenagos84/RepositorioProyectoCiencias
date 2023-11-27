@@ -38,7 +38,6 @@ void MultilistaHijo::AgregarHijo(Hijo hijo) {
      * @param Hijo hijo
      */
 
-
     hijos[posLibre] = std::move(hijo);
     OrganizarCategoria(CEdad,
                        posLibre,
@@ -95,7 +94,6 @@ void MultilistaHijo::OrganizarCategoria(Cabecera<std::string> *&cabecera,
         hijos[indiceC].*siguienteIndice = indiceArray;
     }
 }
-
 
 void MultilistaHijo::CambiarCategoria(Cabecera<std::string> *&cabecera,
                                       int Hijo::*atributo,
@@ -226,9 +224,15 @@ Hijo MultilistaHijo::getHijo(int indiceArray) {
 
 std::string* MultilistaHijo::getElementos()
 {
+    /**
+     * @brief Obtiene un arreglo de nombres de los hijos.
+     *
+     * @return Un puntero a un arreglo de cadenas de caracteres que contiene los nombres de los hijos.
+     */
+
     std::string* arreglo = new std::string[size];
 
-    for(int i =0; i<size;i++)
+    for(int i = 0; i < size; i++)
         arreglo[i] = hijos[i].nombre;
 
     return arreglo;
@@ -236,5 +240,11 @@ std::string* MultilistaHijo::getElementos()
 
 Cabecera<std::string>* MultilistaHijo::getCabecera()
 {
+    /**
+     * @brief Obtiene la cabecera de la multilista.
+     *
+     * @return Un puntero a la cabecera de la multilista, que organiza los hijos por categoría.
+     */
+
     return CEdad;
 }

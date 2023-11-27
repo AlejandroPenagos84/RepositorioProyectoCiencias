@@ -13,12 +13,12 @@ MultilistaCiudad::MultilistaCiudad(int max) {
 }
 
 void MultilistaCiudad::AgregarCiudad(Ciudad ciudad) {
+
     /**
      * @brief Agrega una ciudad a la multilista.
      *
-     * @param nombre Nombre de la ciudad.
+     * @param ciudad Objeto de la clase Ciudad que se agregará a la multilista.
      */
-
 
     // Agregar Ciudad
 

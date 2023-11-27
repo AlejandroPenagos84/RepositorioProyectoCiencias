@@ -79,17 +79,16 @@ MultilistaEmpleados::MultilistaEmpleados(int max) {
 /**
  * @brief Agrega un empleado a la multilista e invoca los métodos privados para organizar los datos.
  *
- * @param Empleado
+ * @param empleado Objeto de la clase Empleado que se agregará a la multilista.
  */
 void MultilistaEmpleados::AgregarEmpleado(Empleado empleado)
 {
     empleados[posLibre] = std::move(empleado);
 
-    //Organizar Por Sexo
+    // Organizar Por Sexo
     OrganizarSexo(posLibre);
 
-    //Organizar Actividad Laboral
-
+    // Organizar Actividad Laboral
     Reorganizar(
             arbolActividad,
             CActividadLaboral,
@@ -98,42 +97,46 @@ void MultilistaEmpleados::AgregarEmpleado(Empleado empleado)
             &Empleado::sigActividadLaboral,
             posLibre);
 
-    //Organizar por ciudad de nacimiento
+    // Organizar por Ciudad de Nacimiento
+    Reorganizar(
+            arbolCiudadNacimiento,
+            CCiudadNacimiento,
+            &Empleado::ciudadNacimiento,
+            indiceCiudadNacimiento,
+            &Empleado::sigCiudadNacimiento,
+            posLibre);
 
-    Reorganizar(arbolCiudadNacimiento,
-                CCiudadNacimiento,
-                &Empleado::ciudadNacimiento,
-                indiceCiudadNacimiento,
-                &Empleado::sigCiudadNacimiento,
-                posLibre);
+    // Organizar por Barrio
+    Reorganizar(
+            arbolBarrio,
+            CBarrio,
+            &Empleado::barrio,
+            indiceBarrio,
+            &Empleado::sigBarrio,
+            posLibre);
 
-    //Organizar por Barrio
-    Reorganizar(arbolBarrio,
-                CBarrio,
-                &Empleado::barrio,
-                indiceBarrio,
-                &Empleado::sigBarrio,
-                posLibre);
-
-    //Organizar Por nombre De Sucursales
-    Reorganizar(arbolSucursales,
-                CSucursal,
-                &Empleado::sucursalTrabajo,
-                indiceSucursal,
-                &Empleado::sigNombreSurcursal,
-                posLibre);
+    // Organizar Por Nombre de Sucursales
+    Reorganizar(
+            arbolSucursales,
+            CSucursal,
+            &Empleado::sucursalTrabajo,
+            indiceSucursal,
+            &Empleado::sigNombreSurcursal,
+            posLibre);
 
     // Organizar Por Numero de Hijos
-    OrganizarCategoria(CNumeroHijos,
-                       posLibre,
-                       &Empleado::sigNumHijos,
-                       getCabeceraNumHijos(posLibre));
+    OrganizarCategoria(
+            CNumeroHijos,
+            posLibre,
+            &Empleado::sigNumHijos,
+            getCabeceraNumHijos(posLibre));
 
-    //Organizar Por edad
-    OrganizarCategoria(CEdad,
-                       posLibre,
-                       &Empleado::sigEdad,
-                       getCabeceraEdad(posLibre));
+    // Organizar Por Edad
+    OrganizarCategoria(
+            CEdad,
+            posLibre,
+            &Empleado::sigEdad,
+            getCabeceraEdad(posLibre));
 
     posLibre++;
     size++;

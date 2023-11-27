@@ -1,7 +1,10 @@
 #include <algorithm>
 #include "Formulario.h"
 
-
+/**
+ * @brief Captura la información sobre los hijos de un empleado.
+ * @param empleado Objeto de la clase Empleado al cual se agregarán los hijos.
+ */
 void Formulario::capturarInfoHijos(Empleado& empleado)
 {
     for (int i = 0; i < empleado.numHijos; ++i) {
@@ -27,10 +30,14 @@ void Formulario::capturarInfoHijos(Empleado& empleado)
     }
 }
 
+/**
+ * @brief Captura la información sobre un empleado.
+ * @return Objeto de la clase Empleado con la información capturada.
+ */
 Empleado Formulario::capturarInfoEmpleado()
 {
     Empleado empleado;
-
+    
     try {
         do {
             std::cout << "Nombre: ";
@@ -205,6 +212,10 @@ Empleado Formulario::capturarInfoEmpleado()
     }
 }
 
+/**
+ * @brief Captura la información sobre una sucursal.
+ * @return Objeto de la clase Sucursal con la información capturada.
+ */
 Sucursal Formulario::capturarInformacionSucursal() {
     Sucursal sucursal;
 

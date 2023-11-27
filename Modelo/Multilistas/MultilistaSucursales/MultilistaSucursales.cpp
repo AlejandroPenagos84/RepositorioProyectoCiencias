@@ -12,8 +12,8 @@ void MultilistaSucursales::AgregarSucursal(Sucursal sucursal) {
     /**
      * @brief Agrega una nueva sucursal a la multilista.
      *
+     * @param sucursal La sucursal a agregar.
      */
-
 
     // Agregar la sucursal al arreglo
     sucursales[posLibre] = sucursal;
@@ -72,13 +72,25 @@ Sucursal MultilistaSucursales::getSucursal(int indiceArray) {
     return sucursales[indiceArray];
 }
 
-int MultilistaSucursales::getSize(){return size;}
+int MultilistaSucursales::getSize() {
+    /**
+     * @brief Obtiene el tamaño actual del arreglo de sucursales.
+     *
+     * @return El tamaño actual del arreglo de sucursales.
+     */
+    return size;
+}
 
-std::string* MultilistaSucursales::getElementos()
-{
+std::string* MultilistaSucursales::getElementos() {
+    /**
+     * @brief Obtiene los elementos del arreglo de sucursales como un arreglo de cadenas.
+     *
+     * @return Un arreglo de cadenas con los elementos del arreglo de sucursales.
+     */
+
     std::string* arreglo = new std::string[size];
 
-    for(int i =0; i<size;i++)
+    for (int i = 0; i < size; i++)
         arreglo[i] = sucursales[i].nombre;
 
     return arreglo;

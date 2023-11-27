@@ -37,9 +37,10 @@ public:
     /**
      * @brief Agrega una ciudad a la multilista.
      *
-     * @param nombre Nombre de la ciudad.
+     * @param ciudad Objeto de la clase Ciudad que se agregará a la multilista.
      */
     void AgregarCiudad(Ciudad ciudad);
+
 
     /**
      * @brief Elimina una ciudad de la multilista.

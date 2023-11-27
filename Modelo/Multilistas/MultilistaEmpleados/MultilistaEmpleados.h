@@ -260,8 +260,6 @@ private:
      * @return Índice de la cabecera.
      */
     int getCabeceraEdad(int indiceArray);
-
-
 };
 
 #endif

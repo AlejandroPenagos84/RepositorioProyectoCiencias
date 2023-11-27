@@ -43,6 +43,7 @@ public:
     /**
      * @brief Agrega un hijo a la multilista.
      *
+     * @param hijo El hijo a agregar.
      */
     void AgregarHijo(Hijo hijo);
 
@@ -123,8 +124,6 @@ private:
     int getCabeceraEdad(int indiceArray);
 
     std::string *getElementos();
-
-
 };
 
 #endif

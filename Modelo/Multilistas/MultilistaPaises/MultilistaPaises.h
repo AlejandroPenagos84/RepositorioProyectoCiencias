@@ -2,7 +2,6 @@
 #define MULTILISTAPAISES_H
 
 #include "../../Estructuras/Pais.h"
-#include<vector>
 
 /**
  * @brief Clase MultilistaPaises
@@ -37,13 +36,14 @@ public:
     /**
      * @brief Agrega un país a la multilista.
      *
-     * @param nombre Nombre del país.
+     * @param pais El país a agregar.
      */
     void AgregarPais(Pais pais);
 
     /**
      * @brief Elimina un país de la multilista.
      *
+     * @param indiceArray Índice en el arreglo de países a eliminar.
      */
     void EliminarPais(int indiceArray);
 
@@ -64,8 +64,18 @@ public:
      */
     Pais getPais(int indiceArray);
 
+    /**
+     * @brief Obtiene el tamaño actual del arreglo de países.
+     *
+     * @return El tamaño actual del arreglo de países.
+     */
     int getSize();
 
+    /**
+     * @brief Obtiene los elementos del arreglo de países como un arreglo de cadenas.
+     *
+     * @return Un arreglo de cadenas con los elementos del arreglo de países.
+     */
     std::string *getElementos();
 };
 

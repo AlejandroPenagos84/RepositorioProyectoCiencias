@@ -38,6 +38,7 @@ public:
     /**
      * @brief Agrega una sucursal a la multilista.
      *
+     * @param sucursal La sucursal a agregar.
      */
     void AgregarSucursal(Sucursal sucursal);
 
@@ -65,8 +66,18 @@ public:
      */
     Sucursal getSucursal(int indiceArray);
 
+    /**
+     * @brief Obtiene los elementos del arreglo de sucursales como un arreglo de cadenas.
+     *
+     * @return Un arreglo de cadenas con los elementos del arreglo de sucursales.
+     */
     std::string *getElementos();
 
+    /**
+     * @brief Obtiene el tamaño actual del arreglo de sucursales.
+     *
+     * @return El tamaño actual del arreglo de sucursales.
+     */
     int getSize();
 };
 
